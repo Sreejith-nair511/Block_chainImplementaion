@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arogya Hyperledger Fabric - Data Flow Visualization</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .flow-arrow {
+            stroke: #3b82f6;
+            stroke-width: 3;
+            fill: none;
+            marker-end: url(#arrowhead);
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+        .flow-arrow.active {
+            stroke: #10b981;
+            stroke-width: 4;
+            opacity: 1;
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { stroke-width: 4; }
+            50% { stroke-width: 6; }
+        }
+        .node {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .node:hover {
+            transform: scale(1.05);
+        }
+        .node.active {
+            animation: glow 1s infinite alternate;
+        }
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 5px #10b981); }
+            to { filter: drop-shadow(0 0 15px #10b981); }
+        }
+        .data-packet {
+            fill: #f59e0b;
+            stroke: #d97706;
+            stroke-width: 2;
+            opacity: 0;
+        }
+        .stats-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-green-400 bg-clip-text text-transparent">
+                Arogya Healthcare Blockchain
+            </h1>
+            <p class="text-gray-300 text-lg">Real-time Data Flow Visualization</p>
+        </div>
+
+        <!-- Stats Dashboard -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="stats-card rounded-lg p-6 text-center">
+                <div class="text-3xl font-bold" id="totalRecords">50</div>
+                <div class="text-sm opacity-80">Total Records</div>
+            </div>
+            <div class="bg-gradient-to-r from-green-500 to-teal-500 rounded-lg p-6 text-center">
+                <div class="text-3xl font-bold" id="encryptedRecords">50</div>
+                <div class="text-sm opacity-80">Encrypted Records</div>
+            </div>
+            <div class="bg-gradient-to-r from-purple-500 to-pink-500 rounded-lg p-6 text-center">
+                <div class="text-3xl font-bold" id="verifiedRecords">50</div>
+                <div class="text-sm opacity-80">Verified Records</div>
+            </div>
+            <div class="bg-gradient-to-r from-orange-500 to-red-500 rounded-lg p-6 text-center">
+                <div class="text-3xl font-bold" id="activeNodes">5</div>
+                <div class="text-sm opacity-80">Active Nodes</div>
+            </div>
+        </div>
+
+        <!-- Main Visualization -->
+        <div class="bg-gray-800 rounded-lg p-6 mb-8">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-2xl font-semibold">Data Flow Visualization</h2>
+                <div class="space-x-4">
+                    <button id="simulateAdd" class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg transition-colors">
+                        Simulate Add Record
+                    </button>
+                    <button id="simulateFetch" class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg transition-colors">
+                        Simulate Fetch Record
+                    </button>
+                    <button id="simulateVerify" class="bg-purple-500 hover:bg-purple-600 px-4 py-2 rounded-lg transition-colors">
+                        Simulate Verify
+                    </button>
+                </div>
+            </div>
+            <svg id="flowDiagram" width="100%" height="400"></svg>
+        </div>
+
+        <!-- Patient Records Tree -->
+        <div class="bg-gray-800 rounded-lg p-6 mb-8">
+            <h2 class="text-2xl font-semibold mb-4">Patient Records Tree Structure</h2>
+            <div id="recordsTree" class="overflow-auto" style="height: 400px;"></div>
+        </div>
+
+        <!-- Activity Log -->
+        <div class="bg-gray-800 rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Real-time Activity Log</h2>
+            <div id="activityLog" class="space-y-2 max-h-64 overflow-y-auto">
+                <div class="text-green-400">✅ System initialized with 50 patient records</div>
+                <div class="text-blue-400">🔐 All records encrypted with AES-256</div>
+                <div class="text-purple-400">🔍 Integrity verification completed</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize the visualization
+        const svg = d3.select("#flowDiagram");
+        const width = 1000;
+        const height = 400;
+        svg.attr("viewBox", `0 0 ${width} ${height}`);
+
+        // Define arrow marker
+        svg.append("defs").append("marker")
+            .attr("id", "arrowhead")
+            .attr("viewBox", "0 -5 10 10")
+            .attr("refX", 8)
+            .attr("refY", 0)
+            .attr("markerWidth", 6)
+            .attr("markerHeight", 6)
+            .attr("orient", "auto")
+            .append("path")
+            .attr("d", "M0,-5L10,0L0,5")
+            .attr("fill", "#3b82f6");
+
+        // Node positions
+        const nodes = [
+            { id: "patient", label: "Patient", x: 100, y: 200, color: "#3b82f6", icon: "👤" },
+            { id: "hospital", label: "Hospital", x: 300, y: 200, color: "#10b981", icon: "🏥" },
+            { id: "ledger", label: "Hyperledger\nFabric", x: 500, y: 200, color: "#8b5cf6", icon: "⛓️" },
+            { id: "doctor", label: "Doctor", x: 700, y: 120, color: "#f59e0b", icon: "👨‍⚕️" },
+            { id: "auditor", label: "Auditor", x: 700, y: 280, color: "#ef4444", icon: "🔍" }
+        ];
+
+        // Connections
+        const connections = [
+            { from: "patient", to: "hospital", label: "Submit Record" },
+            { from: "hospital", to: "ledger", label: "Encrypt & Store" },
+            { from: "ledger", to: "doctor", label: "Fetch & Decrypt" },
+            { from: "ledger", to: "auditor", label: "Audit Trail" }
+        ];
+
+        // Draw connections
+        connections.forEach(conn => {
+            const fromNode = nodes.find(n => n.id === conn.from);
+            const toNode = nodes.find(n => n.id === conn.to);
+            
+            svg.append("path")
+                .attr("class", `flow-arrow ${conn.from}-${conn.to}`)
+                .attr("d", `M${fromNode.x + 40},${fromNode.y} L${toNode.x - 40},${toNode.y}`)
+                .attr("id", `arrow-${conn.from}-${conn.to}`);
+
+            // Add label
+            const midX = (fromNode.x + toNode.x) / 2;
+            const midY = (fromNode.y + toNode.y) / 2 - 10;
+            svg.append("text")
+                .attr("x", midX)
+                .attr("y", midY)
+                .attr("text-anchor", "middle")
+                .attr("fill", "#9ca3af")
+                .attr("font-size", "12px")
+                .text(conn.label);
+        });
+
+        // Draw nodes
+        const nodeGroups = svg.selectAll(".node")
+            .data(nodes)
+            .enter()
+            .append("g")
+            .attr("class", "node")
+            .attr("transform", d => `translate(${d.x - 40}, ${d.y - 30})`);
+
+        nodeGroups.append("rect")
+            .attr("width", 80)
+            .attr("height", 60)
+            .attr("rx", 10)
+            .attr("fill", d => d.color)
+            .attr("opacity", 0.8);
+
+        nodeGroups.append("text")
+            .attr("x", 40)
+            .attr("y", 20)
+            .attr("text-anchor", "middle")
+            .attr("fill", "white")
+            .attr("font-size", "20px")
+            .text(d => d.icon);
+
+        nodeGroups.append("text")
+            .attr("x", 40)
+            .attr("y", 45)
+            .attr("text-anchor", "middle")
+            .attr("fill", "white")
+            .attr("font-size", "10px")
+            .text(d => d.label);
+
+        // Animation functions
+        function animateFlow(path) {
+            const arrow = svg.select(`#arrow-${path}`);
+            arrow.classed("active", true);
+            
+            // Create moving data packet
+            const pathElement = arrow.node();
+            const pathLength = pathElement.getTotalLength();
+            
+            const packet = svg.append("circle")
+                .attr("class", "data-packet")
+                .attr("r", 5)
+                .attr("opacity", 1);
+
+            packet.transition()
+                .duration(2000)
+                .ease(d3.easeLinear)
+                .attrTween("transform", function() {
+                    return function(t) {
+                        const point = pathElement.getPointAtLength(t * pathLength);
+                        return `translate(${point.x}, ${point.y})`;
+                    };
+                })
+                .on("end", function() {
+                    packet.remove();
+                    arrow.classed("active", false);
+                });
+        }
+
+        function logActivity(message, type = "info") {
+            const log = d3.select("#activityLog");
+            const timestamp = new Date().toLocaleTimeString();
+            const colors = {
+                info: "text-blue-400",
+                success: "text-green-400",
+                warning: "text-yellow-400",
+                error: "text-red-400"
+            };
+            
+            log.insert("div", ":first-child")
+                .attr("class", colors[type])
+                .text(`[${timestamp}] ${message}`);
+        }
+
+        // Event handlers
+        document.getElementById("simulateAdd").addEventListener("click", () => {
+            animateFlow("patient-hospital");
+            setTimeout(() => animateFlow("hospital-ledger"), 1000);
+            logActivity("📝 New patient record added and encrypted", "success");
+        });
+
+        document.getElementById("simulateFetch").addEventListener("click", () => {
+            animateFlow("ledger-doctor");
+            setTimeout(() => animateFlow("ledger-auditor"), 500);
+            logActivity("📋 Record fetched and decrypted for authorized access", "info");
+        });
+
+        document.getElementById("simulateVerify").addEventListener("click", () => {
+            animateFlow("ledger-auditor");
+            logActivity("🔍 Integrity verification completed - Record is valid ✅", "success");
+        });
+
+        // Create patient records tree
+        function createRecordsTree() {
+            const treeData = {
+                name: "Hyperledger Fabric Network",
+                children: [
+                    {
+                        name: "Channel: healthcare-channel",
+                        children: [
+                            {
+                                name: "Chaincode: healthcc",
+                                children: [
+                                    {
+                                        name: "Patient Records (50)",
+                                        children: [
+                                            { name: "REC001 - Aarav Sharma (Diabetes)" },
+                                            { name: "REC002 - Kavya Nair (Hypertension)" },
+                                            { name: "REC003 - Rohit Patel (TB)" },
+                                            { name: "REC004 - Priya Reddy (Maternal Health)" },
+                                            { name: "... 46 more records" }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            };
+
+            const treeSvg = d3.select("#recordsTree")
+                .append("svg")
+                .attr("width", "100%")
+                .attr("height", 400);
+
+            const treeLayout = d3.tree().size([380, 600]);
+            const root = d3.hierarchy(treeData);
+            treeLayout(root);
+
+            // Draw links
+            treeSvg.selectAll(".link")
+                .data(root.links())
+                .enter()
+                .append("path")
+                .attr("class", "link")
+                .attr("fill", "none")
+                .attr("stroke", "#4b5563")
+                .attr("stroke-width", 2)
+                .attr("d", d3.linkHorizontal()
+                    .x(d => d.y + 50)
+                    .y(d => d.x + 50));
+
+            // Draw nodes
+            const nodeGroup = treeSvg.selectAll(".tree-node")
+                .data(root.descendants())
+                .enter()
+                .append("g")
+                .attr("class", "tree-node")
+                .attr("transform", d => `translate(${d.y + 50}, ${d.x + 50})`);
+
+            nodeGroup.append("circle")
+                .attr("r", 5)
+                .attr("fill", d => d.children ? "#3b82f6" : "#10b981");
+
+            nodeGroup.append("text")
+                .attr("x", d => d.children ? -10 : 10)
+                .attr("y", 5)
+                .attr("text-anchor", d => d.children ? "end" : "start")
+                .attr("fill", "white")
+                .attr("font-size", "12px")
+                .text(d => d.data.name);
+        }
+
+        // Initialize tree
+        createRecordsTree();
+
+        // Auto-simulate activity every 10 seconds
+        setInterval(() => {
+            const actions = ["simulateAdd", "simulateFetch", "simulateVerify"];
+            const randomAction = actions[Math.floor(Math.random() * actions.length)];
+            document.getElementById(randomAction).click();
+        }, 10000);
+    </script>
+</body>
+</html>

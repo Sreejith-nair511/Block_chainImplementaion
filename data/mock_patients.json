@@ -1,0 +1,502 @@
+[
+  {
+    "recordId": "REC001",
+    "patientName": "Aarav Sharma",
+    "patientId": "PAT001",
+    "doctorId": "DOC101",
+    "description": "Type 2 Diabetes Mellitus with HbA1c 8.2%. Patient on Metformin 500mg BD. Regular monitoring required.",
+    "hospital": "AIIMS Delhi",
+    "timestamp": "2023-03-15T10:30:00Z",
+    "source": "ICMR Report 2023"
+  },
+  {
+    "recordId": "REC002",
+    "patientName": "Kavya Nair",
+    "patientId": "PAT002",
+    "doctorId": "DOC102",
+    "description": "Hypertension Stage 2 (BP 160/100). Started on Amlodipine 5mg OD. Lifestyle modifications advised.",
+    "hospital": "Apollo Chennai",
+    "timestamp": "2023-04-22T14:15:00Z",
+    "source": "WHO India 2024"
+  },
+  {
+    "recordId": "REC003",
+    "patientName": "Rohit Patel",
+    "patientId": "PAT003",
+    "doctorId": "DOC103",
+    "description": "Pulmonary Tuberculosis - Category I treatment initiated. Sputum AFB positive. DOT started.",
+    "hospital": "Safdarjung Hospital",
+    "timestamp": "2023-05-10T09:45:00Z",
+    "source": "Govt. EHR Dataset (anonymized)"
+  },
+  {
+    "recordId": "REC004",
+    "patientName": "Priya Reddy",
+    "patientId": "PAT004",
+    "doctorId": "DOC104",
+    "description": "Antenatal care - 28 weeks gestation. Gestational diabetes detected. Insulin therapy initiated.",
+    "hospital": "Fortis Bangalore",
+    "timestamp": "2023-06-18T11:20:00Z",
+    "source": "ICMR Report 2023"
+  },
+  {
+    "recordId": "REC005",
+    "patientName": "Arjun Singh",
+    "patientId": "PAT005",
+    "doctorId": "DOC105",
+    "description": "Dengue fever - Platelet count 45,000. Hospitalized for monitoring. IV fluids started.",
+    "hospital": "Max Hospital Delhi",
+    "timestamp": "2023-07-25T16:30:00Z",
+    "source": "WHO India 2024"
+  },
+  {
+    "recordId": "REC006",
+    "patientName": "Sneha Gupta",
+    "patientId": "PAT006",
+    "doctorId": "DOC106",
+    "description": "Acute Myocardial Infarction - STEMI. Primary PCI performed. Dual antiplatelet therapy started.",
+    "hospital": "Medanta Gurgaon",
+    "timestamp": "2023-08-12T08:15:00Z",
+    "source": "Govt. EHR Dataset (anonymized)"
+  },
+  {
+    "recordId": "REC007",
+    "patientName": "Vikram Joshi",
+    "patientId": "PAT007",
+    "doctorId": "DOC107",
+    "description": "Chronic Kidney Disease Stage 3. Creatinine 2.1 mg/dl. ACE inhibitor therapy optimized.",
+    "hospital": "PGIMER Chandigarh",
+    "timestamp": "2023-09-05T13:45:00Z",
+    "source": "ICMR Report 2023"
+  },
+  {
+    "recordId": "REC008",
+    "patientName": "Ananya Iyer",
+    "patientId": "PAT008",
+    "doctorId": "DOC108",
+    "description": "Bronchial Asthma exacerbation. Peak flow 60% predicted. Nebulization and steroids given.",
+    "hospital": "CMC Vellore",
+    "timestamp": "2023-10-14T17:20:00Z",
+    "source": "WHO India 2024"
+  },
+  {
+    "recordId": "REC009",
+    "patientName": "Karan Malhotra",
+    "patientId": "PAT009",
+    "doctorId": "DOC109",
+    "description": "Hepatitis B chronic infection. HBV DNA positive. Antiviral therapy with Tenofovir initiated.",
+    "hospital": "Kokilaben Hospital Mumbai",
+    "timestamp": "2023-11-28T12:10:00Z",
+    "source": "Govt. EHR Dataset (anonymized)"
+  },
+  {
+    "recordId": "REC010",
+    "patientName": "Deepika Rao",
+    "patientId": "PAT010",
+    "doctorId": "DOC110",
+    "description": "Iron deficiency anemia - Hemoglobin 7.2 g/dl. Iron sucrose infusion started. Dietary counseling done.",
+    "hospital": "Manipal Hospital Bangalore",
+    "timestamp": "2023-12-15T15:30:00Z",
+    "source": "ICMR Report 2023"
+  },
+  {
+    "recordId": "REC011",
+    "patientName": "Rahul Kumar",
+    "patientId": "PAT011",
+    "doctorId": "DOC111",
+    "description": "Rheumatoid Arthritis - Active disease. Methotrexate 15mg weekly started. Regular monitoring planned.",
+    "hospital": "AIIMS Delhi",
+    "timestamp": "2024-01-20T10:45:00Z",
+    "source": "WHO India 2024"
+  },
+  {
+    "recordId": "REC012",
+    "patientName": "Meera Agarwal",
+    "patientId": "PAT012",
+    "doctorId": "DOC112",
+    "description": "Hypothyroidism - TSH 12.5 mIU/L. Levothyroxine 50mcg OD initiated. Follow-up in 6 weeks.",
+    "hospital": "Fortis Mohali",
+    "timestamp": "2024-02-08T14:20:00Z",
+    "source": "Govt. EHR Dataset (anonymized)"
+  },
+  {
+    "recordId": "REC013",
+    "patientName": "Siddharth Verma",
+    "patientId": "PAT013",
+    "doctorId": "DOC113",
+    "description": "Peptic ulcer disease - H. pylori positive. Triple therapy with PPI, Amoxicillin, Clarithromycin started.",
+    "hospital": "Apollo Hyderabad",
+    "timestamp": "2024-03-12T09:15:00Z",
+    "source": "ICMR Report 2023"
+  },
+  {
+    "recordId": "REC014",
+    "patientName": "Pooja Bansal",
+    "patientId": "PAT014",
+    "doctorId": "DOC114",
+    "description": "Polycystic Ovary Syndrome - Irregular cycles, hirsutism. Metformin and OCPs started.",
+    "hospital": "Max Hospital Saket",
+    "timestamp": "2024-04-05T16:40:00Z",
+    "source": "WHO India 2024"
+  },
+  {
+    "recordId": "REC015",
+    "patientName": "Amit Chopra",
+    "patientId": "PAT015",
+    "doctorId": "DOC115",
+    "description": "Acute pancreatitis - Lipase elevated 5x normal. Conservative management with IV fluids and pain control.",
+    "hospital": "Safdarjung Hospital",
+    "timestamp": "2024-05-18T11:25:00Z",
+    "source": "Govt. EHR Dataset (anonymized)"
+  },
+  {
+    "recordId": "REC016",
+    "patientName": "Riya Sinha",
+    "patientId": "PAT016",
+    "doctorId": "DOC116",
+    "description": "Migraine with aura - Frequent episodes affecting daily life. Propranolol prophylaxis started.",
+    "hospital": "Narayana Health Bangalore",
+    "timestamp": "2024-06-22T13:50:00Z",
+    "source": "ICMR Report 2023"
+  },
+  {
+    "recordId": "REC017",
+    "patientName": "Gaurav Tiwari",
+    "patientId": "PAT017",
+    "doctorId": "DOC117",
+    "description": "Chronic Obstructive Pulmonary Disease - GOLD Stage 2. Bronchodilator therapy optimized.",
+    "hospital": "PGIMER Chandigarh",
+    "timestamp": "2024-07-10T08:30:00Z",
+    "source": "WHO India 2024"
+  },
+  {
+    "recordId": "REC018",
+    "patientName": "Nisha Pandey",
+    "patientId": "PAT018",
+    "doctorId": "DOC118",
+    "description": "Urinary tract infection - E. coli sensitive to Nitrofurantoin. 5-day course prescribed.",
+    "hospital": "Apollo Chennai",
+    "timestamp": "2024-08-03T15:15:00Z",
+    "source": "Govt. EHR Dataset (anonymized)"
+  },
+  {
+    "recordId": "REC019",
+    "patientName": "Manish Jain",
+    "patientId": "PAT019",
+    "doctorId": "DOC119",
+    "description": "Gout acute attack - Uric acid 9.2 mg/dl. Colchicine for acute episode, Allopurinol for prophylaxis.",
+    "hospital": "Fortis Bangalore",
+    "timestamp": "2024-09-14T12:05:00Z",
+    "source": "ICMR Report 2023"
+  },
+  {
+    "recordId": "REC020",
+    "patientName": "Shreya Mehta",
+    "patientId": "PAT020",
+    "doctorId": "DOC120",
+    "description": "Depression moderate episode - PHQ-9 score 16. Sertraline 50mg OD started with counseling.",
+    "hospital": "NIMHANS Bangalore",
+    "timestamp": "2024-10-01T14:35:00Z",
+    "source": "WHO India 2024"
+  },
+  {
+    "recordId": "REC021",
+    "patientName": "Rajesh Khanna",
+    "patientId": "PAT021",
+    "doctorId": "DOC121",
+    "description": "Atrial fibrillation - New onset. Anticoagulation with Warfarin started. Rate control achieved.",
+    "hospital": "Medanta Gurgaon",
+    "timestamp": "2024-11-12T10:20:00Z",
+    "source": "Govt. EHR Dataset (anonymized)"
+  },
+  {
+    "recordId": "REC022",
+    "patientName": "Divya Saxena",
+    "patientId": "PAT022",
+    "doctorId": "DOC122",
+    "description": "Osteoporosis - T-score -2.8 at spine. Alendronate weekly with calcium and Vitamin D supplementation.",
+    "hospital": "Max Hospital Delhi",
+    "timestamp": "2024-12-05T16:45:00Z",
+    "source": "ICMR Report 2023"
+  },
+  {
+    "recordId": "REC023",
+    "patientName": "Suresh Pillai",
+    "patientId": "PAT023",
+    "doctorId": "DOC123",
+    "description": "Stroke ischemic - Left MCA territory. Thrombolysis given within window. Antiplatelet therapy started.",
+    "hospital": "CMC Vellore",
+    "timestamp": "2025-01-18T07:45:00Z",
+    "source": "WHO India 2024"
+  },
+  {
+    "recordId": "REC024",
+    "patientName": "Kavita Sharma",
+    "patientId": "PAT024",
+    "doctorId": "DOC124",
+    "description": "Breast cancer - Stage II invasive ductal carcinoma. Neoadjuvant chemotherapy planned.",
+    "hospital": "Tata Memorial Mumbai",
+    "timestamp": "2025-02-22T13:10:00Z",
+    "source": "Govt. EHR Dataset (anonymized)"
+  },
+  {
+    "recordId": "REC025",
+    "patientName": "Anil Yadav",
+    "patientId": "PAT025",
+    "doctorId": "DOC125",
+    "description": "Epilepsy generalized tonic-clonic - Breakthrough seizures. Phenytoin levels subtherapeutic, dose adjusted.",
+    "hospital": "AIIMS Delhi",
+    "timestamp": "2025-03-08T11:55:00Z",
+    "source": "ICMR Report 2023"
+  },
+  {
+    "recordId": "REC026",
+    "patientName": "Sunita Devi",
+    "patientId": "PAT026",
+    "doctorId": "DOC126",
+    "description": "Malaria falciparum - Severe disease with cerebral involvement. Artesunate IV therapy initiated.",
+    "hospital": "Safdarjung Hospital",
+    "timestamp": "2025-04-15T09:30:00Z",
+    "source": "WHO India 2024"
+  },
+  {
+    "recordId": "REC027",
+    "patientName": "Harsh Agrawal",
+    "patientId": "PAT027",
+    "doctorId": "DOC127",
+    "description": "Inflammatory bowel disease - Ulcerative colitis moderate activity. Mesalamine and prednisolone started.",
+    "hospital": "Apollo Hyderabad",
+    "timestamp": "2025-05-20T14:25:00Z",
+    "source": "Govt. EHR Dataset (anonymized)"
+  },
+  {
+    "recordId": "REC028",
+    "patientName": "Priyanka Singh",
+    "patientId": "PAT028",
+    "doctorId": "DOC128",
+    "description": "Systemic lupus erythematosus - Active nephritis. Immunosuppressive therapy with Mycophenolate started.",
+    "hospital": "PGIMER Chandigarh",
+    "timestamp": "2025-06-12T15:40:00Z",
+    "source": "ICMR Report 2023"
+  },
+  {
+    "recordId": "REC029",
+    "patientName": "Varun Kapoor",
+    "patientId": "PAT029",
+    "doctorId": "DOC129",
+    "description": "Pneumonia community-acquired - Streptococcus pneumoniae. Ceftriaxone IV therapy for 7 days.",
+    "hospital": "Fortis Mohali",
+    "timestamp": "2025-07-03T08:15:00Z",
+    "source": "WHO India 2024"
+  },
+  {
+    "recordId": "REC030",
+    "patientName": "Neha Bhatia",
+    "patientId": "PAT030",
+    "doctorId": "DOC130",
+    "description": "Thyroid cancer - Papillary carcinoma. Total thyroidectomy performed. Radioiodine therapy planned.",
+    "hospital": "Max Hospital Saket",
+    "timestamp": "2025-08-17T12:30:00Z",
+    "source": "Govt. EHR Dataset (anonymized)"
+  },
+  {
+    "recordId": "REC031",
+    "patientName": "Deepak Mishra",
+    "patientId": "PAT031",
+    "doctorId": "DOC131",
+    "description": "Cirrhosis liver - Child-Pugh Class B. Alcohol-related. Abstinence counseling and diuretics started.",
+    "hospital": "ILBS Delhi",
+    "timestamp": "2023-02-28T10:45:00Z",
+    "source": "ICMR Report 2023"
+  },
+  {
+    "recordId": "REC032",
+    "patientName": "Ritika Joshi",
+    "patientId": "PAT032",
+    "doctorId": "DOC132",
+    "description": "Fibromyalgia - Widespread pain and fatigue. Pregabalin and amitriptyline combination therapy started.",
+    "hospital": "Manipal Hospital Bangalore",
+    "timestamp": "2023-07-14T16:20:00Z",
+    "source": "WHO India 2024"
+  },
+  {
+    "recordId": "REC033",
+    "patientName": "Sanjay Gupta",
+    "patientId": "PAT033",
+    "doctorId": "DOC133",
+    "description": "Prostate cancer - Gleason score 7. Radical prostatectomy performed. PSA monitoring planned.",
+    "hospital": "Tata Memorial Mumbai",
+    "timestamp": "2023-11-09T13:15:00Z",
+    "source": "Govt. EHR Dataset (anonymized)"
+  },
+  {
+    "recordId": "REC034",
+    "patientName": "Madhuri Rao",
+    "patientId": "PAT034",
+    "doctorId": "DOC134",
+    "description": "Endometriosis - Severe dysmenorrhea and pelvic pain. Laparoscopic surgery performed.",
+    "hospital": "Fortis Bangalore",
+    "timestamp": "2024-01-25T11:40:00Z",
+    "source": "ICMR Report 2023"
+  },
+  {
+    "recordId": "REC035",
+    "patientName": "Akash Pandey",
+    "patientId": "PAT035",
+    "doctorId": "DOC135",
+    "description": "Schizophrenia - First episode psychosis. Risperidone 2mg BD started with family counseling.",
+    "hospital": "NIMHANS Bangalore",
+    "timestamp": "2024-04-30T09:25:00Z",
+    "source": "WHO India 2024"
+  },
+  {
+    "recordId": "REC036",
+    "patientName": "Swati Kulkarni",
+    "patientId": "PAT036",
+    "doctorId": "DOC136",
+    "description": "Glaucoma primary open-angle - IOP 28 mmHg. Latanoprost eye drops started. Regular monitoring required.",
+    "hospital": "Sankara Nethralaya Chennai",
+    "timestamp": "2024-08-11T14:50:00Z",
+    "source": "Govt. EHR Dataset (anonymized)"
+  },
+  {
+    "recordId": "REC037",
+    "patientName": "Ravi Chandra",
+    "patientId": "PAT037",
+    "doctorId": "DOC137",
+    "description": "Multiple sclerosis - Relapsing-remitting type. High-dose steroids for acute relapse. DMT planned.",
+    "hospital": "AIIMS Delhi",
+    "timestamp": "2024-12-18T15:35:00Z",
+    "source": "ICMR Report 2023"
+  },
+  {
+    "recordId": "REC038",
+    "patientName": "Anjali Tripathi",
+    "patientId": "PAT038",
+    "doctorId": "DOC138",
+    "description": "Ovarian cancer - Stage IIIC serous adenocarcinoma. Debulking surgery and chemotherapy planned.",
+    "hospital": "CMC Vellore",
+    "timestamp": "2025-02-14T10:15:00Z",
+    "source": "WHO India 2024"
+  },
+  {
+    "recordId": "REC039",
+    "patientName": "Mohit Arora",
+    "patientId": "PAT039",
+    "doctorId": "DOC139",
+    "description": "Bipolar disorder - Manic episode. Lithium carbonate 600mg BD started with mood stabilization.",
+    "hospital": "PGIMER Chandigarh",
+    "timestamp": "2025-05-07T12:45:00Z",
+    "source": "Govt. EHR Dataset (anonymized)"
+  },
+  {
+    "recordId": "REC040",
+    "patientName": "Shilpa Nair",
+    "patientId": "PAT040",
+    "doctorId": "DOC140",
+    "description": "Diabetic nephropathy - Stage 4 CKD. ACE inhibitor optimized. Renal replacement therapy counseling done.",
+    "hospital": "Apollo Chennai",
+    "timestamp": "2025-07-22T08:55:00Z",
+    "source": "ICMR Report 2023"
+  },
+  {
+    "recordId": "REC041",
+    "patientName": "Vishal Kumar",
+    "patientId": "PAT041",
+    "doctorId": "DOC141",
+    "description": "Leukemia acute lymphoblastic - B-cell type. Induction chemotherapy with ALL protocol initiated.",
+    "hospital": "Tata Memorial Mumbai",
+    "timestamp": "2023-09-21T11:30:00Z",
+    "source": "WHO India 2024"
+  },
+  {
+    "recordId": "REC042",
+    "patientName": "Preeti Sharma",
+    "patientId": "PAT042",
+    "doctorId": "DOC142",
+    "description": "Postpartum depression - Edinburgh scale 18. Sertraline safe in breastfeeding started with counseling.",
+    "hospital": "Safdarjung Hospital",
+    "timestamp": "2024-03-16T16:10:00Z",
+    "source": "Govt. EHR Dataset (anonymized)"
+  },
+  {
+    "recordId": "REC043",
+    "patientName": "Abhishek Jain",
+    "patientId": "PAT043",
+    "doctorId": "DOC143",
+    "description": "Parkinson disease - Early stage with tremor and rigidity. Levodopa-carbidopa 25/100 TDS started.",
+    "hospital": "NIMHANS Bangalore",
+    "timestamp": "2024-06-28T13:25:00Z",
+    "source": "ICMR Report 2023"
+  },
+  {
+    "recordId": "REC044",
+    "patientName": "Seema Agarwal",
+    "patientId": "PAT044",
+    "doctorId": "DOC144",
+    "description": "Cervical cancer - Stage IIB squamous cell carcinoma. Concurrent chemoradiation therapy planned.",
+    "hospital": "AIIMS Delhi",
+    "timestamp": "2024-10-19T09:40:00Z",
+    "source": "WHO India 2024"
+  },
+  {
+    "recordId": "REC045",
+    "patientName": "Nitin Yadav",
+    "patientId": "PAT045",
+    "doctorId": "DOC145",
+    "description": "Psoriasis moderate to severe - PASI score 16. Methotrexate 15mg weekly with folic acid supplementation.",
+    "hospital": "Max Hospital Delhi",
+    "timestamp": "2025-01-11T14:15:00Z",
+    "source": "Govt. EHR Dataset (anonymized)"
+  },
+  {
+    "recordId": "REC046",
+    "patientName": "Rashmi Patel",
+    "patientId": "PAT046",
+    "doctorId": "DOC146",
+    "description": "Alzheimer disease - Mild cognitive impairment progressing. Donepezil 5mg OD started with family support.",
+    "hospital": "Fortis Bangalore",
+    "timestamp": "2025-04-02T11:05:00Z",
+    "source": "ICMR Report 2023"
+  },
+  {
+    "recordId": "REC047",
+    "patientName": "Tarun Singh",
+    "patientId": "PAT047",
+    "doctorId": "DOC147",
+    "description": "Colorectal cancer - Stage III adenocarcinoma. Adjuvant FOLFOX chemotherapy after surgery completed.",
+    "hospital": "Tata Memorial Mumbai",
+    "timestamp": "2025-06-25T15:20:00Z",
+    "source": "WHO India 2024"
+  },
+  {
+    "recordId": "REC048",
+    "patientName": "Lakshmi Iyer",
+    "patientId": "PAT048",
+    "doctorId": "DOC148",
+    "description": "Osteoarthritis knee - Bilateral Grade 3. Intra-articular hyaluronic acid injection given. Physiotherapy advised.",
+    "hospital": "Apollo Hyderabad",
+    "timestamp": "2025-08-14T12:50:00Z",
+    "source": "Govt. EHR Dataset (anonymized)"
+  },
+  {
+    "recordId": "REC049",
+    "patientName": "Sachin Gupta",
+    "patientId": "PAT049",
+    "doctorId": "DOC149",
+    "description": "Anxiety disorder generalized - GAD-7 score 15. Escitalopram 10mg OD with CBT sessions started.",
+    "hospital": "PGIMER Chandigarh",
+    "timestamp": "2023-12-07T10:35:00Z",
+    "source": "ICMR Report 2023"
+  },
+  {
+    "recordId": "REC050",
+    "patientName": "Vandana Reddy",
+    "patientId": "PAT050",
+    "doctorId": "DOC150",
+    "description": "Chronic fatigue syndrome - Post-viral fatigue lasting 8 months. Graded exercise therapy and pacing strategies advised.",
+    "hospital": "Manipal Hospital Bangalore",
+    "timestamp": "2025-07-30T16:25:00Z",
+    "source": "WHO India 2024"
+  }
+]
