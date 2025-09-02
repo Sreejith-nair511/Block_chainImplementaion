@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arogya Healthcare Blockchain Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .pulse-dot {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        .network-node {
+            transition: all 0.3s ease;
+        }
+        .network-node:hover {
+            transform: scale(1.1);
+        }
+        .transaction-item {
+            animation: slideIn 0.5s ease-out;
+        }
+        @keyframes slideIn {
+            from { transform: translateX(-100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Header -->
+    <header class="gradient-bg shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+                        <i class="fas fa-heartbeat text-purple-600 text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-2xl font-bold">Arogya Healthcare Blockchain</h1>
+                        <p class="text-purple-200">Secure • Transparent • Immutable</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 bg-green-400 rounded-full pulse-dot"></div>
+                        <span class="text-sm">Network Active</span>
+                    </div>
+                    <button class="bg-white bg-opacity-20 hover:bg-opacity-30 px-4 py-2 rounded-lg transition-colors">
+                        <i class="fas fa-cog mr-2"></i>Settings
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dashboard -->
+    <div class="container mx-auto px-6 py-8">
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-gradient-to-r from-blue-500 to-blue-600 rounded-xl p-6 card-hover">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-blue-100 text-sm">Total Records</p>
+                        <p class="text-3xl font-bold" id="totalRecords">50</p>
+                    </div>
+                    <i class="fas fa-database text-3xl text-blue-200"></i>
+                </div>
+            </div>
+            <div class="bg-gradient-to-r from-green-500 to-green-600 rounded-xl p-6 card-hover">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-green-100 text-sm">Encrypted Records</p>
+                        <p class="text-3xl font-bold" id="encryptedRecords">50</p>
+                    </div>
+                    <i class="fas fa-lock text-3xl text-green-200"></i>
+                </div>
+            </div>
+            <div class="bg-gradient-to-r from-purple-500 to-purple-600 rounded-xl p-6 card-hover">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-purple-100 text-sm">Verified Records</p>
+                        <p class="text-3xl font-bold" id="verifiedRecords">50</p>
+                    </div>
+                    <i class="fas fa-shield-alt text-3xl text-purple-200"></i>
+                </div>
+            </div>
+            <div class="bg-gradient-to-r from-orange-500 to-orange-600 rounded-xl p-6 card-hover">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-orange-100 text-sm">Total Transactions</p>
+                        <p class="text-3xl font-bold" id="totalTransactions">150</p>
+                    </div>
+                    <i class="fas fa-exchange-alt text-3xl text-orange-200"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Network Visualization -->
+            <div class="lg:col-span-2 bg-gray-800 rounded-xl p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-semibold">Network Topology</h2>
+                    <div class="flex space-x-2">
+                        <button id="simulateAdd" class="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded text-sm transition-colors">
+                            Add Record
+                        </button>
+                        <button id="simulateVerify" class="bg-green-500 hover:bg-green-600 px-3 py-1 rounded text-sm transition-colors">
+                            Verify
+                        </button>
+                        <button id="simulateDecrypt" class="bg-purple-500 hover:bg-purple-600 px-3 py-1 rounded text-sm transition-colors">
+                            Decrypt
+                        </button>
+                    </div>
+                </div>
+                <div id="networkVisualization" class="h-80"></div>
+            </div>
+
+            <!-- Real-time Activity -->
+            <div class="bg-gray-800 rounded-xl p-6">
+                <h2 class="text-xl font-semibold mb-4">Real-time Activity</h2>
+                <div id="activityFeed" class="space-y-3 max-h-80 overflow-y-auto">
+                    <!-- Activity items will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Patient Records Tree -->
+        <div class="mt-8 bg-gray-800 rounded-xl p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-xl font-semibold">Patient Records Hierarchy</h2>
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm text-gray-400">50 Records Loaded</span>
+                    <button class="bg-indigo-500 hover:bg-indigo-600 px-4 py-2 rounded-lg text-sm transition-colors">
+                        <i class="fas fa-download mr-2"></i>Export Data
+                    </button>
+                </div>
+            </div>
+            <div id="recordsTree" class="h-96 overflow-auto"></div>
+        </div>
+
+        <!-- Security Features -->
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="bg-gray-800 rounded-xl p-6 card-hover">
+                <div class="text-center">
+                    <i class="fas fa-key text-4xl text-yellow-400 mb-4"></i>
+                    <h3 class="text-lg font-semibold mb-2">AES-256 Encryption</h3>
+                    <p class="text-gray-400 text-sm">All patient data encrypted with military-grade encryption</p>
+                </div>
+            </div>
+            <div class="bg-gray-800 rounded-xl p-6 card-hover">
+                <div class="text-center">
+                    <i class="fas fa-fingerprint text-4xl text-green-400 mb-4"></i>
+                    <h3 class="text-lg font-semibold mb-2">SHA-256 Hashing</h3>
+                    <p class="text-gray-400 text-sm">Cryptographic hashes ensure data integrity</p>
+                </div>
+            </div>
+            <div class="bg-gray-800 rounded-xl p-6 card-hover">
+                <div class="text-center">
+                    <i class="fas fa-user-shield text-4xl text-purple-400 mb-4"></i>
+                    <h3 class="text-lg font-semibold mb-2">Zero-Knowledge Proofs</h3>
+                    <p class="text-gray-400 text-sm">Patient consent verification without revealing private data</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Socket.IO connection
+        const socket = io();
+
+        // Dashboard state
+        let stats = {
+            totalRecords: 50,
+            encryptedRecords: 50,
+            verifiedRecords: 50,
+            totalTransactions: 150
+        };
+
+        // Update stats display
+        function updateStats(newStats) {
+            stats = { ...stats, ...newStats };
+            document.getElementById('totalRecords').textContent = stats.totalRecords;
+            document.getElementById('encryptedRecords').textContent = stats.encryptedRecords;
+            document.getElementById('verifiedRecords').textContent = stats.verifiedRecords;
+            document.getElementById('totalTransactions').textContent = stats.totalTransactions;
+        }
+
+        // Create network visualization
+        function createNetworkVisualization() {
+            const container = d3.select('#networkVisualization');
+            const width = container.node().getBoundingClientRect().width;
+            const height = 320;
+
+            const svg = container.append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            // Network nodes
+            const nodes = [
+                { id: 'patient', label: 'Patients', x: 100, y: 160, color: '#3b82f6', icon: '👥' },
+                { id: 'hospital', label: 'Hospitals', x: 250, y: 160, color: '#10b981', icon: '🏥' },
+                { id: 'blockchain', label: 'Blockchain', x: 400, y: 160, color: '#8b5cf6', icon: '⛓️' },
+                { id: 'doctor', label: 'Doctors', x: 550, y: 100, color: '#f59e0b', icon: '👨‍⚕️' },
+                { id: 'auditor', label: 'Auditors', x: 550, y: 220, color: '#ef4444', icon: '🔍' }
+            ];
+
+            // Draw connections
+            const connections = [
+                { from: nodes[0], to: nodes[1] },
+                { from: nodes[1], to: nodes[2] },
+                { from: nodes[2], to: nodes[3] },
+                { from: nodes[2], to: nodes[4] }
+            ];
+
+            connections.forEach(conn => {
+                svg.append('line')
+                    .attr('x1', conn.from.x)
+                    .attr('y1', conn.from.y)
+                    .attr('x2', conn.to.x)
+                    .attr('y2', conn.to.y)
+                    .attr('stroke', '#4b5563')
+                    .attr('stroke-width', 2)
+                    .attr('opacity', 0.6);
+            });
+
+            // Draw nodes
+            const nodeGroups = svg.selectAll('.network-node')
+                .data(nodes)
+                .enter()
+                .append('g')
+                .attr('class', 'network-node')
+                .attr('transform', d => `translate(${d.x - 30}, ${d.y - 30})`);
+
+            nodeGroups.append('circle')
+                .attr('cx', 30)
+                .attr('cy', 30)
+                .attr('r', 25)
+                .attr('fill', d => d.color)
+                .attr('opacity', 0.8);
+
+            nodeGroups.append('text')
+                .attr('x', 30)
+                .attr('y', 35)
+                .attr('text-anchor', 'middle')
+                .attr('font-size', '16px')
+                .text(d => d.icon);
+
+            nodeGroups.append('text')
+                .attr('x', 30)
+                .attr('y', 55)
+                .attr('text-anchor', 'middle')
+                .attr('fill', 'white')
+                .attr('font-size', '12px')
+                .text(d => d.label);
+        }
+
+        // Create records tree
+        function createRecordsTree() {
+            const container = d3.select('#recordsTree');
+            const width = container.node().getBoundingClientRect().width;
+            const height = 380;
+
+            const svg = container.append('svg')
+                .attr('width', width)
+                .attr('height', height);
+
+            // Tree data
+            const treeData = {
+                name: "Arogya Blockchain Network",
+                children: [
+                    {
+                        name: "Healthcare Channel",
+                        children: [
+                            {
+                                name: "Patient Records (50)",
+                                children: [
+                                    { name: "REC001 - Aarav Sharma (Diabetes)" },
+                                    { name: "REC002 - Kavya Nair (Hypertension)" },
+                                    { name: "REC003 - Rohit Patel (Tuberculosis)" },
+                                    { name: "REC004 - Priya Reddy (Maternal Health)" },
+                                    { name: "... 46 more encrypted records" }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            };
+
+            const treeLayout = d3.tree().size([height - 40, width - 100]);
+            const root = d3.hierarchy(treeData);
+            treeLayout(root);
+
+            // Draw links
+            svg.selectAll('.link')
+                .data(root.links())
+                .enter()
+                .append('path')
+                .attr('class', 'link')
+                .attr('fill', 'none')
+                .attr('stroke', '#4b5563')
+                .attr('stroke-width', 2)
+                .attr('d', d3.linkHorizontal()
+                    .x(d => d.y + 50)
+                    .y(d => d.x + 20));
+
+            // Draw nodes
+            const nodeGroup = svg.selectAll('.tree-node')
+                .data(root.descendants())
+                .enter()
+                .append('g')
+                .attr('class', 'tree-node')
+                .attr('transform', d => `translate(${d.y + 50}, ${d.x + 20})`);
+
+            nodeGroup.append('circle')
+                .attr('r', 6)
+                .attr('fill', d => d.children ? '#3b82f6' : '#10b981');
+
+            nodeGroup.append('text')
+                .attr('x', d => d.children ? -10 : 10)
+                .attr('y', 5)
+                .attr('text-anchor', d => d.children ? 'end' : 'start')
+                .attr('fill', 'white')
+                .attr('font-size', '14px')
+                .text(d => d.data.name);
+        }
+
+        // Add activity item
+        function addActivityItem(transaction) {
+            const feed = document.getElementById('activityFeed');
+            const item = document.createElement('div');
+            item.className = 'transaction-item bg-gray-700 rounded-lg p-3 border-l-4';
+            
+            let borderColor = 'border-blue-400';
+            let icon = 'fas fa-plus';
+            
+            switch(transaction.type) {
+                case 'ADD_RECORD':
+                    borderColor = 'border-blue-400';
+                    icon = 'fas fa-plus';
+                    break;
+                case 'VERIFY_INTEGRITY':
+                    borderColor = 'border-green-400';
+                    icon = 'fas fa-shield-alt';
+                    break;
+                case 'DECRYPT_RECORD':
+                    borderColor = 'border-purple-400';
+                    icon = 'fas fa-unlock';
+                    break;
+                default:
+                    borderColor = 'border-gray-400';
+                    icon = 'fas fa-info';
+            }
+            
+            item.className += ` ${borderColor}`;
+            
+            item.innerHTML = `
+                <div class="flex items-start space-x-3">
+                    <i class="${icon} text-sm mt-1"></i>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium">${transaction.type.replace('_', ' ')}</p>
+                        <p class="text-xs text-gray-400">${transaction.recordId || 'System'}</p>
+                        <p class="text-xs text-gray-500">${new Date(transaction.timestamp).toLocaleTimeString()}</p>
+                    </div>
+                    <span class="text-xs px-2 py-1 rounded ${transaction.status === 'SUCCESS' || transaction.status === 'VALID' ? 'bg-green-600' : 'bg-red-600'}">
+                        ${transaction.status}
+                    </span>
+                </div>
+            `;
+            
+            feed.insertBefore(item, feed.firstChild);
+            
+            // Keep only last 10 items
+            while (feed.children.length > 10) {
+                feed.removeChild(feed.lastChild);
+            }
+        }
+
+        // Event handlers
+        document.getElementById('simulateAdd').addEventListener('click', () => {
+            fetch('/api/simulate/add-record', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    recordId: `REC${String(Math.floor(Math.random() * 50) + 1).padStart(3, '0')}`,
+                    patientName: 'New Patient',
+                    condition: 'Medical Condition'
+                })
+            });
+        });
+
+        document.getElementById('simulateVerify').addEventListener('click', () => {
+            fetch('/api/simulate/verify-record', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    recordId: `REC${String(Math.floor(Math.random() * 50) + 1).padStart(3, '0')}`
+                })
+            });
+        });
+
+        document.getElementById('simulateDecrypt').addEventListener('click', () => {
+            fetch('/api/simulate/decrypt-record', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    recordId: `REC${String(Math.floor(Math.random() * 50) + 1).padStart(3, '0')}`
+                })
+            });
+        });
+
+        // Socket event handlers
+        socket.on('stats-update', updateStats);
+        socket.on('new-transaction', addActivityItem);
+
+        // Initialize dashboard
+        createNetworkVisualization();
+        createRecordsTree();
+
+        // Load initial data
+        fetch('/api/stats')
+            .then(response => response.json())
+            .then(updateStats);
+
+        fetch('/api/transactions')
+            .then(response => response.json())
+            .then(transactions => {
+                transactions.forEach(addActivityItem);
+            });
+    </script>
+</body>
+</html>
