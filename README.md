@@ -60,6 +60,3 @@ README.md                   # Project documentation
 ## License
 This project is licensed under the MIT License.
 =======
-ON system implementation 
-
->>>>>>> f6c947c8aaed7d5c75b94c60a1339308cf0ae5e6
