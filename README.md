@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Arogya Hyper Blockchain Implementation
 
 This project is a Hyperledger Fabric-based blockchain solution for managing healthcare records securely and transparently. It includes chaincode, a dashboard, mock data, and scripts for interacting with the ledger.
